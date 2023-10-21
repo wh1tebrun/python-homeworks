@@ -12,7 +12,7 @@ y - x = y  # Ziehe x von y ab
 
 }
 
-/*
+"""
 
 (1) Präzision:
 -Der Algorithmus hat die Eigenschaft "Präzision", weil er über eindeutig festgelegte Schritte verfügt. 
@@ -29,9 +29,9 @@ y - x = y  # Ziehe x von y ab
 (5) Terminierung:
 -Der Algorithmus hat die Eigenschaft "Terminierung", denn die Berechnung des Algorithmus für legale Eingaben endet in endlichen Schritten.
 
-*/
+"""
 
-//Wenn man alle Operationen, die über VSCode durchgeführt werden, ausgeben lassen würde:
+# Wenn man alle Operationen, die über VSCode durchgeführt werden, ausgeben lassen würde:
 
 
 # 1
