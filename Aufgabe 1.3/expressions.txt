@@ -1,17 +1,18 @@
 (a)
 
-Falls man in der interaktiven Konsole den Wert "42" eingibt, erhält man das Ergebnis. Das liegt daran, dass die interaktive Konsole in der Lage ist, 
-den Wert "42" interzupretieren, und auch auszugeben. Die interaktive Konsole kann verstehen, was mit 42 gemeint ist. 
+Der Unterschied zwischen print(42) und 42 in der interaktiven Konsole besteht darin, dass sich 42 ohne print() direkt auf das Erbenis bezieht, 
+während print(42) die Möglichkeit bietet, Python prägnant zu informieren, damit der Wert in der Konsole angezeigt wird.
 
-Im Gegensatz dazu ist VSCode nicht in der Lage zu verstehen, was nur mit einer Zahl gemeint wird. Es gibt keine Anweisungen oder Befehle, sodass VSCode verstehen kann. 
-Wenn man aber den Wert "42" unter einer Funktion eingeben würde, könnte VSCode dementsprechend verstehen.
+Beide von diesen Verwendungen haben in der Regel das gleiche Ergebnis, aber meistens ist print daher verwendet, die Werte besser reguliert anzuzeigen.
+Darüber hinaus ist print bei der Verwendung und der Kombination mehrerer Werte sehr nützlich.
 
 
 (b)
 
-Die interaktive Konsole geht davon aus, dass die Eingabe unvollständig ist und deswegen wartet auf neue Anweisungen. Aus diesem Grund
+Die interaktive Konsole geht davon aus, dass die Eingabe unvollständig ist und deswegen 
+wartet auf vervollständigte Anweisungen. Aus diesem Grund
 wird "..." in der Ausgabe angezeigt.
 
-Wenn Sie denselben Ausdruck in einem Skript ausführen, wird der Befehl nicht verstanden, weil es einen Syntaxfehler gibt. Daher tauchen
-Fehlermeldungen auf. Das Problem zu beheben, muss man die Klammer-Eingabe ändern. Die rictige Lösung wäre:
-print(((3 * 3) + 13 // (5 - 1)) * (2 + 2))
+Wenn Sie denselben Ausdruck in einem Skript ausführen, wird der Befehl nicht verstanden, 
+weil es einen Syntaxfehler gibt. Daher tauchen Fehlermeldungen auf. Das Problem zu beheben, 
+muss man die Klammer-Eingabe ändern. Die rictige Lösung wäre: print(((3 * 3) + 13 // (5 - 1)) * (2 + 2))
