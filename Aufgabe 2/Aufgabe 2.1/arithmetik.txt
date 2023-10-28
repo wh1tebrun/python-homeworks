@@ -1,0 +1,12 @@
+(a) >>> res = "X" * (1 + 2) ** 2 + str(2)
+Die Varible ist String, weil bei der Zuweisung Strings benutzt werden und das Ergebnis nie 
+zu einer ganzen Zahl (int) oder zu einer Gleitkommazahl (float) konvertiert wird.
+(b) >>> res = int(float(str(2 + 52) + ".3")) + 5
+Die Varible ist integer, da auch wenn man in den inneren Klammern am Anfang einen string hat, 
+wird das Ergebnis beim ersten Schritt zu einer Gleitkommazahl (float) und dann beim zweiten Schritt zu einer ganzen Zahl konvertiert.
+(c) >>> from math import log, e
+>>> res = int(log(42, e)) * abs(e ** 1)
+Die Varible ist Float, denn die Multiplikation einer Gleitkommazahl und einer ganzen Zahl auch eine Gleitkommazahl ergibt. Absoult e ist eine Gleitkommazahl laut Python3.12.
+(d) >>> res = (0x1b ^ 0b1110) // int(3.1415) + 2.0
+Die Varible ist Float, weil am Ende der Operation zum vorletzten Ergebnis eine Gleitkommazahl 2.0 addiert wird, sodass das Ergebnis auch zu einer
+Gleitkommazahl wird.
