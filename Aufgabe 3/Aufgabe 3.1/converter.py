@@ -34,5 +34,17 @@ elif sourceUnit == "G" and targetUnit == "R":
     if sourceValue > 400 or sourceValue < 0:
         sourceValue %= 400
     print((sourceValue), (sourceUnit), "corresponds to", gradians_to_radians(sourceValue), (targetUnit))
+elif sourceUnit == "D" and targetUnit == "D":
+    if sourceValue > 360 or sourceValue < 0:
+        sourceValue %= 360
+    print((sourceValue), (sourceUnit), "corresponds to", (sourceValue), (targetUnit))
+elif sourceUnit == "R" and targetUnit == "R":
+    if sourceValue > 2 * pi or sourceValue < 0:
+        sourceValue %= 2 * pi
+    print((sourceValue), (sourceUnit), "corresponds to", (sourceValue), (targetUnit))
+elif sourceUnit == "G" and targetUnit == "G":
+    if sourceValue > 400 or sourceValue < 0:
+        sourceValue %= 400
+    print((sourceValue), (sourceUnit), "corresponds to", (sourceValue), (targetUnit))
 else:
     print(f'{sourceUnit} or {targetUnit} invalid character')
