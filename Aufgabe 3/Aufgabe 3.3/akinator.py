@@ -1,27 +1,88 @@
-print("Hallo! Denke an einen Superhelden bzw. eine Superheldin aus der Universe X-Men. \nIch versuche, den Charakter zu erraten! \n\nFangen wir an:")
+print("Hallo! Denke an einen Superhelden bzw. eine Superheldin von Marvel oder DC-Comics \nIch versuche, den Charakter zu erraten! \n\nFangen wir an:")
 frage1 = ((input("Ist dein Charakter ein Mensch? [Ja/Nein]:")))
 frage2 = ((input("Hat dein Charakter Haare? [Ja/Nein]:")))
-frage3 = ((input("Hat dein Character Messer in seinen Händen? [Ja/Nein]:")))
+frage3 = ((input("Kann dein Charakter fliegen? [Ja/Nein]: ")))
 frage4 = ((input("Ist dein Charakter weiblich? [Ja/Nein]:")))
-frage5 = ((input("Kann dein Character seine Form ändern [Ja/Nein]:")))
-frage6 = ((input("Kann dein Charakter Metallobjekte kontrollieren? [Ja/Nein]:")))
-frage7 = ((input("Ist dein Character schneller als fast alles? [Ja/Nein]:")))
-frage8 = ((input("Ist dein Charakter normalerweise blau? [Ja/Nein]:")))
-frage9 = ((input("Kann dein Charakter Gedanken lesen? [Ja/Nein]:")))
-frage10 = ((input("Ist dein Character körperlich ziemlich stark? [Ja/Nein]:")))
+frage5 = ((input("Ist dein Character sehr schnell? [Ja/Nein]:")))
+frage6 = ((input("ist dein Charakter rot oder grün angezogen? [Ja/Nein]:")))
+frage7 = ((input("Hat dein Charakter Superkräfte? [Ja/Nein]:")))
+frage8 = ((input("Hat dein Character Messer in seinen Händen? [Ja/Nein]:")))
+frage9 = ((input("Ist dein Character körperlich ziemlich stark? [Ja/Nein]:")))
+frage10 = ((input("Kann dein Charakter magische Schilde erschaffen? [Ja/Nein]:")))
+frage11 = ((input("Kann dein Charakter sich teleportieren? [Ja/Nein]:")))
+frage12 = ((input("Hat dein Charakter magnetische Kräfte? [Ja/Nein]:")))
+frage13 = ((input("Ist dein Charakter aus dem DC-Universum? [Ja/Nein]:")))
+frage14 = ((input("Hat dein Charakter kybernetische Verbesserungen? [Ja/Nein]:")))
+frage15 = ((input("Benutzt dein Charakter sein Auge als Waffe? [Ja/Nein]:")))
+frage16 = ((input("Hat dein Charakter tierähnliche Merkmale? [Ja/Nein]:")))
 
 
-if frage2 == "Ja" and frage4 == "Ja" and frage5 == "Ja" and frage8 == "Ja" and frage9 == "Nein" and frage7 == "Ja":
-    print("Ich hab's! Es ist Mystique")
-elif frage1 == "Ja" and frage9 == "Ja" and frage4 == "Nein" and frage5 == "Nein" and frage6 == "Nein" and frage7 == "Nein":
-    print("Ich hab's! Es ist Professor X")
-elif frage1 == "Ja" and frage2 == "Ja" and frage3 == "Ja" and frage4 == "Nein" and frage7 == "Nein" and frage8 == "Nein":
-    print("Ich hab's! Es ist Wolverine")
-elif frage1 == "Ja" and frage2 == "Ja" and frage7 == "Ja" and frage4 == "Nein" and frage5 == "Nein" and frage8 == "Nein":
-    print("Ich hab's! Es ist Quicksilver")
-elif frage1 == "Ja" and frage2 == "Ja" and frage6 == "Ja" and frage4 == "Nein" and frage5 == "Nein" and frage8 == "Nein":
-    print("Ich hab's! Es ist Magneto")
-elif frage1 == "Ja" and frage5 == "Ja" and frage10 == "Ja" and frage4 == "Nein" and frage7 == "Nein":
-    print("Ich hab's! Es ist Beast")
-else:
-    print("Es tut mir leid, Ich konnte deinen Character nicht erraten.\nDenke an einen anderen Character diesmal")
+def akinator():
+    if frage1 == "Ja":  # ist ein Mensch
+        if frage2 == "Ja":  # Hat Haare
+            if frage5 == "Ja":  # ist sehr schnell
+                if frage6 == "Ja":  # ist rot oder grün
+                    return ("The Flash")
+                elif frage6 == "Nein":
+                    if frage9 == "Ja":  # ist sehr stark
+                        return ("Beast")
+                    if frage9 == "Nein":
+                        if frage11 == "Ja":  # kann teleportieren
+                            return ("Nightcrawler")
+                        elif frage11 == "Nein":
+                            return ("Quicksilver")
+            elif frage5 == "Nein":
+                if frage7 == "Ja":  # hat superkräfte
+                    if frage4 == "Ja":  # ist weiblich
+                        return ("Shadowcat")
+                    elif frage4 == "Nein":
+                        if frage8 == "Ja":  # Messer als Hände
+                            return ("Wolverine")
+                        elif frage8 == "Nein":
+                            if frage10 == "Ja":  # Teleportationsfähigkeit
+                                return ("Doctor Strange")
+                            elif frage10 == "Nein":
+                                if frage12 == "Ja":  # Magnetische Kräfte
+                                    return ("Magneto")
+                                elif frage12 == "Nein":
+                                    if frage14 == "Ja":   # Cyberkinetik?
+                                        if frage15 == "Ja":
+                                            return ("Bishop")
+                                        elif frage15 == "Nein":
+                                            return ("Cable")
+                                    elif frage14 == "Nein":
+                                        if frage15 == "Ja":  # Auge als Waffe
+                                            return ("Cyclops")
+                                        elif frage15 == "Nein":
+                                            if frage16 == "Ja":
+                                                return ("Beast")
+                                            elif frage16 == "Nein":
+                                                return ("Professor X")
+                if frage7 == "Nein":  # hat Superkräfte
+                    if frage6 == "Ja":  # ist rot oder grün
+                        return ("Green Arrow")
+                    elif frage6 == "Nein":
+                        return ("Batman")
+        elif frage2 == "Nein":
+            return ("Professor X")
+    elif frage1 == "Nein":  # ist kein Mensch
+        if frage3 == "Ja":  # kann fliegen
+            if frage4 == "Ja":  # ist weiblich
+                return ("Wonder Woman")
+            elif frage4 == "Nein":
+                if frage15 == "Ja":  # benutzt Auge als Waffe
+                    return ("Superman")
+                elif frage15 == "Nein":
+                    return ("Angel")
+        elif frage3 == "Nein":
+            if frage4 == "Ja":  # ist weiblich
+                return ("Mystique")
+            elif frage4 == "Nein":
+                return ("Aquaman")
+    else:
+        print("Es tut mir leid, Ich konnte deinen Character nicht erraten.\nDenke an einen anderen Character diesmal")
+        return
+
+
+if akinator() is not None:
+    print("Der Charakter an den du denkst ist: " + str(akinator()))
