@@ -88,10 +88,10 @@ def move_snake(snake: Snake) -> Snake:
 
 def collision(snake: Snake, width: int, height: int) -> bool:
 
-    if snake.positions[0].x >= width or snake.positions[0].x <= 0:
+    if snake.positions[0].x > width or snake.positions[0].x < 0:
         return True
 
-    if snake.positions[0].y >= height or snake.positions[0].y <= 0:
+    if snake.positions[0].y > height or snake.positions[0].y < 0:
         return True
 
     prevPositions = {}
@@ -108,8 +108,8 @@ def collision(snake: Snake, width: int, height: int) -> bool:
 
 def generate_item(game: Game) -> Item:
     energy = randint(1, 5)
-    x = randint(1, game.width)
-    y = randint(1, game.height)
+    x = randint(0, game.width)
+    y = randint(0, game.height)
     position = Vec2(x, y)
 
     return Item(position, energy)
