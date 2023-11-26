@@ -79,4 +79,5 @@ def game(length: int, symbols: str):
     print(f"Anzahl der Versuche: {attempts}")
 
 
-game(5, "ABCDE")
+if __name__ == '__main__':
+    game(5, "ABCDE")
