@@ -8,6 +8,10 @@ class Vec2:
     y: int
 
 
+def add_vecs(v1: Vec2, v2: Vec2) -> Vec2:
+    return Vec2(v1.x + v2.x, v1.y + v2.y)
+
+
 @dataclass
 class Item:
     position: Vec2
@@ -31,95 +35,60 @@ class Game:
     items: list[Item]
 
 
-def add_vecs(v1: Vec2, v2: Vec2) -> Vec2:
-    x = v1.x + v2.x
-    y = v1.y + v2.y
-    return Vec2(x, y)
-
-
 def turn_direction(direction: Vec2, turn: int) -> Vec2:
-    if turn != -1 and turn != 1:
-        return direction
     if turn == 1:
-        if direction.x == 1 and direction.y == 0:
-            return Vec2(0, 1)
-        if direction.x == 0 and direction.y == 1:
-            return Vec2(-1, 0)
-        if direction.x == -1 and direction.y == 0:
-            return Vec2(0, -1)
-        if direction.x == 0 and direction.y == -1:
-            return Vec2(1, 0)
-    if turn == -1:
-        if direction.x == 1 and direction.y == 0:
-            return Vec2(0, -1)
-        if direction.x == 0 and direction.y == -1:
-            return Vec2(-1, 0)
-        if direction.x == -1 and direction.y == 0:
-            return Vec2(0, 1)
-        if direction.x == 0 and direction.y == 1:
-            return Vec2(1, 0)
+        return Vec2(-direction.y, direction.x)
+    elif turn == -1:
+        return Vec2(direction.y, -direction.x)
+    else:
+        return Vec2(direction.x, direction.y)
 
 
 def turn_snake(snake: Snake, turn: int) -> Snake:
     if not snake.alive:
         return snake
-
-    snake.direction = turn_direction(snake.direction, turn)
-    return snake
+    return Snake(snake.positions,
+                 turn_direction(snake.direction, turn),
+                 snake.alive, snake.grow)
 
 
 def grow_positions(positions: list[Vec2], direction: Vec2) -> list[Vec2]:
-    newVec2 = add_vecs(positions[0], direction)
-    positions.insert(0, newVec2)
-    return positions
+    head = positions[0]
+    return [add_vecs(head, direction)] + positions
 
 
 def move_snake(snake: Snake) -> Snake:
     if not snake.alive:
         return snake
-    newPositions = grow_positions(snake.positions, snake.direction)
+    new_positions = grow_positions(snake.positions, snake.direction)
     if snake.grow == 0:
-        snake.positions = newPositions[:-1]
-    elif snake.grow > 0:
-        snake.positions = newPositions
-        snake.grow = snake.grow - 1
-    return snake
+        return Snake(new_positions[:-1], snake.direction, snake.alive,
+                     snake.grow)
+    else:
+        return Snake(new_positions, snake.direction, snake.alive,
+                     snake.grow - 1)
 
 
 def collision(snake: Snake, width: int, height: int) -> bool:
-
-    if snake.positions[0].x > width or snake.positions[0].x < 0:
+    head = snake.positions[0]
+    if head in snake.positions[1:]:
         return True
-
-    if snake.positions[0].y > height or snake.positions[0].y < 0:
+    if (head.x < 0 or head.x >= width or head.y < 0 or head.y >= height):
         return True
-
-    prevPositions = {}
-    for position in snake.positions:
-        key = str(position.x) + "/" + str(position.y)
-        found = prevPositions.get(key)
-
-        if found:
-            return True
-        else:
-            prevPositions[key] = True
     return False
 
 
 def generate_item(game: Game) -> Item:
-    energy = randint(1, 5)
-    x = randint(0, game.width)
-    y = randint(0, game.height)
-    position = Vec2(x, y)
-
-    return Item(position, energy)
+    return Item(Vec2(randint(0, game.width - 1), randint(0, game.height - 1)),
+                randint(1, 5))
 
 
 def pick_item(items: list[Item], position: Vec2) -> tuple[list[Item], int]:
-    sum = 0
+    new_items = []
+    energy = 0
     for item in items:
-        if item.position.x == position.x and item.position.y == position.y:
-            sum += item.energy
-            items.remove(item)
-
-    return (items, sum)
+        if position != item.position:
+            new_items = new_items + [item]
+        else:
+            energy += item.energy
+    return new_items, energy

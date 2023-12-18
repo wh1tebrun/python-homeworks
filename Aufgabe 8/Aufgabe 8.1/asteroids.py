@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from math import sqrt
+import math
 import pygame
 
 
@@ -8,12 +8,8 @@ class Vec2:
     x: float
     y: float
 
-    def init(self, x: float, y: float):
-        self.x = x
-        self.y = y
-
     def abs(self) -> float:
-        return sqrt((self.x) ** 2 + (self.y) ** 2)
+        return math.sqrt(self.x * self.x + self.y * self.y)
 
 
 @dataclass
@@ -23,21 +19,19 @@ class GameObject:
     alive: bool
     color: tuple[int, int, int]
 
+    def draw(self, screen: pygame.Surface):
+        pygame.draw.circle(screen, self.color, (self.position.x, self.position.y), self.radius)
+
     def update(self, width: int, height: int, delta: float):
         if not (0 <= self.position.x < width and 0 <= self.position.y < height):
             self.alive = False
 
-    def is_colliding(self, other: 'GameObject') -> bool:
-        pos = Vec2(self.position.x - other.position.x, self.position.y - other.position.y)
-        distance = pos.abs()
-        combined_radius = self.radius + other.radius
-        return distance <= combined_radius
+    def is_colliding(self, other: "GameObject") -> bool:
+        dist = Vec2(self.position.x - other.position.x, self.position.y - other.position.y)
+        return dist.abs() <= self.radius + other.radius
 
-    def on_collision(self, other: 'GameObject'):
+    def on_collision(self, other: "GameObject"):
         pass
-
-    def draw(self, screen: pygame.Surface):
-        pygame.draw.circle(screen, self.color, (int(self.position.x), int(self.position.y)), self.radius)
 
 
 @dataclass
@@ -87,26 +81,27 @@ class Ship(GameObject):
     hp: int
 
     def update(self, width: int, height: int, delta: float):
-        super().update(width, height, delta)
         if self.hp <= 0:
             self.hp = 0
             self.alive = False
+        super().update(width, height, delta)
 
     def on_collision(self, other: 'GameObject'):
-        if isinstance(other, Asteroid):
-            self.hp -= other.radius
-        elif isinstance(other, Health):
-            self.hp += other.amount
-        elif isinstance(other, Ammunition):
-            self.shots += other.amount
+        match other:
+            case Asteroid():
+                self.hp -= other.radius
+            case Health():
+                self.hp += other.amount
+            case Ammunition():
+                self.shots += other.amount
 
     def shoot(self) -> Projectile:
-        if self.shots > 0:
+        alive = False
+        if self.shots:
             self.shots -= 1
-            projectile_position = Vec2(self.position.x, self.position.y)
-            return Projectile(projectile_position, 5.0, True, (255, 0, 0), 3.0)
-        else:
-            return Projectile(Vec2(0, 0), 5.0, False, (255, 0, 0), 3.0)
+            alive = True
+        pos = Vec2(self.position.x, self.position.y)
+        return Projectile(pos, 5, alive, (255, 0, 0), 3)
 
 
 @dataclass

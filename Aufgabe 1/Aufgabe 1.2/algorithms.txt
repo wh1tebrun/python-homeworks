@@ -1,129 +1,23 @@
-x = 86
-y = 92
+a)
+Beobachtung:
+`42` und `print(42)` zeigen in der interaktiven Konsole die selbe Ausgabe (42)
+Im Skript-Modus erzeugt `print(42)` eine Ausgabe (42), aber `42` nicht.
+Zudem wird `42` in VS-Code gelb markiert mit der Warnung "Expression value is unused".
+Erkenntnis:
+Im interaktiven Modus wird jeder eingegebene Wert ausgegeben.
+(genauer: Ausdrücke werden ausgewertet und der resultierende Wert wird ausgegeben)
+Im Skript-Modus erfolgt eine Ausgabe nur, wenn ein Ausdruck an print() übergeben wird.
+Zudem ist es kein guter Stil, "unverwendete" Ausdrücke im Skript-Modus zu verwenden.
+Gemeint sind Ausdrücke, die z.B. nicht an print oder andere Funktionen übergeben werden
+und auch nicht einer Variable zugewiesen werden. (s. Vorlesungen 03 und 04)
+Die VS-Code-Extension Pylance erkennt dies und markiert solche Ausdrücke gelb.
 
-if(x != y){  # Solange x ungleich y ist,
-
-if(x > y){  # Wenn x grösser als y ist,
-x - y = x  # Ziehe y von x ab
-}
-else{ # Ansonsten
-y - x = y  # Ziehe x von y ab
-}
-
-}
-
-"""
-
-(1) Präzision:
--Der Algorithmus hat die Eigenschaft "Präzision", weil er über eindeutig festgelegte Schritte verfügt. 
-
-(2) Effektivität:
--Der Algorithmus hat die Eigenschaft "Effektivität", da jeder Schritt von ihm anzuwenden ist.
-
-(3) Statische Finitheit:
--Der Algorithmus hat die Eigenschaft "Statische Finitheit", denn seine Vorschrift endet nach einem Zeitraum.
-
-(4) Dynamische Finitheit:
--Der Algorithmus hat die Eigenschaft "Dynamische Finitheit", weil er zur Ausführung im Computer nur endlich viel Speicher erfordert.
-
-(5) Terminierung:
--Der Algorithmus hat die Eigenschaft "Terminierung", denn die Berechnung des Algorithmus für legale Eingaben endet in endlichen Schritten.
-
-"""
-
-# Wenn man alle Operationen, die über VSCode durchgeführt werden, ausgeben lassen würde:
-
-
-# 1
-y - x = 92 - 86 
-92 - 86 = 6
-y = 6
-
-# 2
-x - y = 86 - 6
-86 - 6 = 80
-x = 80
-
-# 3
-x - y = 80 - 6
-80 - 6 = 74
-x = 74
-
-# 4
-x - y = 74 - 6
-74 - 6 = 80
-x = 68
-
-# 5
-x - y = 68 - 6
-68 - 6 = 80
-x = 62
-
-# 6
-x - y = 62 - 6
-62 - 6 = 80
-x = 56
-
-# 7
-x - y = 56 - 6
-56 - 6 = 80
-x = 50
-
-# 8
-x - y = 50 - 6
-50 - 6 = 80
-x = 44
-
-# 9
-x - y = 44 - 6
-44 - 6 = 80
-x = 38
-
-# 10
-x - y = 38 - 6
-38 - 6 = 80
-x = 32
-
-# 11
-x - y = 32 - 6
-32 - 6 = 80
-x = 26
-
-# 12
-x - y = 26 - 6
-26 - 6 = 80
-x = 20
-
-# 13
-x - y = 20 - 6
-20 - 6 = 80
-x = 14
-
-# 14
-x - y = 14 - 6
-14 - 6 = 80
-x = 8
-
-# 15
-x - y = 8 - 6
-8 - 6 = 80
-x = 2
-
-# 16
-y - x = 6 - 2
-6 - 2 = 4
-y = 4
-
-# 17
-y - x = 4 - 2
-4 - 2 = 2
-y = 2 
-
-# 18(Schlussendlich sind x und y gleich :D)
-x = 2 
-y = 2 
-
-x = y ## Weil if(x != y) nicht mehr erreicht wird, werden keine Operationen mehr durchgeführt werden.
-
-
-
+b)
+Der Ausdruck `print((((3 * 3) + 13 // (5 - 1)) * (2 + 2))` zeigt nach Eingabe in
+die interaktive Konsole nur `...` an.
+Das Problem ist, dass in dem Ausdruck eine schließende Klammer fehlt.
+`...` ist ein visuelles Feedback dafür, dass eine unvollständiger
+Ausdruck eingegeben wurde, und dieser vervollständigt werden soll,
+zum Beispiel durch Eingabe einer schließenden Klammer.
+Im Skript-Modus endet die Datei ohne Fortführung des Ausdrucks und erzeugt
+somit einen "Syntax-Fehler" mit der Beschreibung "'(' was never closed"

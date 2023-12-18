@@ -1,50 +1,22 @@
-from conversion import radians_to_degrees, degrees_to_radians, degrees_to_gradians, gradians_to_degrees, radians_to_gradians, gradians_to_radians
-from math import pi
-sourceUnit = ((input("Enter source unit [D / R / G]: ")))
-sourceValue = float((input("Enter source value: ")))
-targetUnit = ((input("Enter target unit [D / R / G]: ")))
+import conversion
 
 
-if sourceUnit == "D" and targetUnit == "G":
-    if sourceValue > 360 or sourceValue < 0:
-        sourceValue %= 360
-    print((sourceValue), (sourceUnit), "corresponds to", degrees_to_gradians(sourceValue), (targetUnit))
+if __name__ == '__main__':
+    source_unit = input("Enter source unit [D / R / G]: ")
+    source_value = float(input("Enter source value: "))
+    target_unit = input("Enter target unit [D / R / G]: ")
 
-elif sourceUnit == "R" and targetUnit == "D":
-    if sourceValue > 2 * pi or sourceValue < 0:
-        sourceValue %= 2 * pi
-    print((sourceValue), (sourceUnit), "corresponds to", radians_to_degrees(sourceValue), (targetUnit))
+    angle = source_value
 
-elif sourceUnit == "D" and targetUnit == "R":
-    if sourceValue > 360 or sourceValue < 0:
-        sourceValue %= 360
-    print((sourceValue), (sourceUnit), "corresponds to", degrees_to_radians(sourceValue), (targetUnit))
+    if source_unit == "D":
+        angle = conversion.degrees_to_gradians(angle)
+    elif source_unit == "R":
+        angle = conversion.radians_to_gradians(angle)
 
-elif sourceUnit == "G" and targetUnit == "D":
-    if sourceValue > 400 or sourceValue < 0:
-        sourceValue %= 400
-    print((sourceValue), (sourceUnit), "corresponds to", gradians_to_degrees(sourceValue), (targetUnit))
+    if target_unit == "D":
+        angle = conversion.gradians_to_degrees(angle)
+    elif target_unit == "R":
+        angle = conversion.gradians_to_radians(angle)
 
-elif sourceUnit == "R" and targetUnit == "G":
-    if sourceValue > 2 * pi or sourceValue < 0:
-        sourceValue %= 2 * pi
-    print((sourceValue), (sourceUnit), "corresponds to", radians_to_gradians(sourceValue), (targetUnit))
-
-elif sourceUnit == "G" and targetUnit == "R":
-    if sourceValue > 400 or sourceValue < 0:
-        sourceValue %= 400
-    print((sourceValue), (sourceUnit), "corresponds to", gradians_to_radians(sourceValue), (targetUnit))
-elif sourceUnit == "D" and targetUnit == "D":
-    if sourceValue > 360 or sourceValue < 0:
-        sourceValue %= 360
-    print((sourceValue), (sourceUnit), "corresponds to", (sourceValue), (targetUnit))
-elif sourceUnit == "R" and targetUnit == "R":
-    if sourceValue > 2 * pi or sourceValue < 0:
-        sourceValue %= 2 * pi
-    print((sourceValue), (sourceUnit), "corresponds to", (sourceValue), (targetUnit))
-elif sourceUnit == "G" and targetUnit == "G":
-    if sourceValue > 400 or sourceValue < 0:
-        sourceValue %= 400
-    print((sourceValue), (sourceUnit), "corresponds to", (sourceValue), (targetUnit))
-else:
-    print(f'{sourceUnit} or {targetUnit} invalid character')
+    print()
+    print(source_value, source_unit, "corresponds to", angle, target_unit)

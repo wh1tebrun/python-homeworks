@@ -1,88 +1,79 @@
-from enum import Enum
-from typing import Union, Optional
+from typing import Optional, Any
 from dataclasses import dataclass
+from enum import Enum, auto
 
 
-def ask(question: str):
-    answer = input(f'{question}? [Yes / No]: ')
-    match answer:
-        case "Yes":
+# A1
+def ask(s: str) -> Optional[bool]:
+    match input(f"{s}? [Yes / No]: "):
+        case "Yes" | "yes":
             return True
-
-        case "yes":
-            return True
-
-        case "No":
+        case "No" | "no":
             return False
+        case _:
+            return None
 
-        case "no":
-            return False
 
-
+# A2
 class Operator(Enum):
-    ADD = 'ADD'
-    MUL = 'MUL'
+    ADD = auto()
+    MUL = auto()
 
 
-def eval[T](t: tuple[Enum, T, T]) -> Union[str, int, None]:
-    operator, element1, element2 = t
-    if type(element1) != type(element2):
-        return None
-    if operator == Operator.ADD and isinstance(element1, (int, str)):
-        return element1 + element2
-    elif operator == Operator.MUL and isinstance(element1, int):
-        return element1 * element2
-    else:
-        return None
+def eval[T: (int, str)](t: tuple[Operator, T, T]) -> Optional[T]:
+    match t:
+        case (Operator.ADD, x, y):
+            return x + y
+        case (Operator.MUL, int(i), int(j)):
+            return i * j
+        case _:
+            return None
 
 
-assert eval((Operator.ADD, 2, 5)) == 7
-assert eval((Operator.MUL, 2, 5)) == 10
-assert eval((Operator.ADD, "2", "5")) == "25"
-assert eval((Operator.MUL, "2", "5")) is None
-
-
+# A3
 @dataclass
 class Cons[T]:
-    def __init__(self, head: T, tail: Optional["T"] = None):
-        self.head = head
-        self.tail = tail
+    head: T
+    tail: Optional["Cons[T]"] = None
+    # tail: "LList[T]"
 
 
-LList = Optional[Cons]
+type LList[T] = Optional[Cons[T]]
 
-example = Cons(1, Cons(2, None))
-assert example.head == 1
-assert example.tail == Cons(2, None)
-assert example.tail is not None
-assert example.tail.head == 2
-assert example.tail.tail is None
-
-
-def tail(xs: LList) -> LList:
-    if xs is None or xs.tail is None:
-        return None
-    return xs.tail
+if __name__ == '__main__':
+    example = Cons(1, Cons(2, None))
+    assert example.head == 1
+    assert example.tail == Cons(2, None)
+    assert example.tail
+    assert example.tail.head == (2)
+    assert example.tail.tail is None
 
 
-assert tail(None) is None
-assert tail(Cons(1, None)) is None
-assert tail(Cons("1", Cons("2", None))) == Cons("2", None)
-assert tail(Cons("1", Cons("2", Cons("5", None)))) == Cons("2", Cons("5", None))
+def tail[T](xs: LList[T]) -> LList[T]:
+    match xs:
+        case None:
+            return None
+        case Cons(_, tail):
+            return tail
 
 
-def len(xs: LList) -> int:
-    count = 0
-    current = xs
-
-    while current is not None:
-        count += 1
-        current = current.tail
-
-    return count
+if __name__ == '__main__':
+    assert tail(None) is None
+    assert tail(Cons(1, None)) is None
+    assert tail(Cons("1", Cons("2", None))) == Cons("2", None)
+    assert tail(Cons("1", Cons("2", Cons("5", None)))) == Cons("2", Cons("5", None))
 
 
-assert len(None) == 0
-assert len(Cons(True, None)) == 1
-assert len(Cons(True, Cons(False, None))) == 2
-assert len(Cons(True, Cons(False, Cons(True, None)))) == 3
+def len(xs: LList[Any]) -> int:
+    match xs:
+        case None:
+            return 0
+        case Cons(_, tail):
+            return 1 + len(tail)
+
+
+if __name__ == '__main__':
+    assert len(None) == 0
+    assert len(Cons(True, None)) == 1
+    assert len(Cons(True, Cons(False, None))) == 2
+    assert len(Cons(True, Cons(False, Cons(True, None)))) == 3

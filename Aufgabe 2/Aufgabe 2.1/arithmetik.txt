@@ -1,12 +1,34 @@
-(a) >>> res = "X" * (1 + 2) ** 2 + str(2)
-Die Varible ist String, weil bei der Zuweisung Strings benutzt werden und das Ergebnis nie 
-zu einer ganzen Zahl (int) oder zu einer Gleitkommazahl (float) konvertiert wird.
-(b) >>> res = int(float(str(2 + 52) + ".3")) + 5
-Die Varible ist integer, da auch wenn man in den inneren Klammern am Anfang einen string hat, 
-wird das Ergebnis beim ersten Schritt zu einer Gleitkommazahl (float) und dann beim zweiten Schritt zu einer ganzen Zahl konvertiert.
-(c) >>> from math import log, e
->>> res = int(log(42, e)) * abs(e ** 1)
-Die Varible ist Float, denn die Multiplikation einer Gleitkommazahl und einer ganzen Zahl auch eine Gleitkommazahl ergibt. Absoult e ist eine Gleitkommazahl laut Python3.12.
-(d) >>> res = (0x1b ^ 0b1110) // int(3.1415) + 2.0
-Die Varible ist Float, weil am Ende der Operation zum vorletzten Ergebnis eine Gleitkommazahl 2.0 addiert wird, sodass das Ergebnis auch zu einer
-Gleitkommazahl wird.
+Zur Übersicht schreiben wir z.B. <int> für einen beliebigen Ausdruck mit Typ int.
+
+a) res hat den Typ str, da
+
+    (1 + 2) ** 2    : int
+    "X" * <int>     : str
+    str(2)          : str
+    <str> + <str>   : str
+
+b) res hat den Typ int, da
+
+    2 + 52          : int
+    str(<int>)      : str
+    <str> + ".3"    : str
+    float(<str>)    : float
+    int(<float>)    : int
+    <int> + 5       : int
+
+c) res hat den Typ float, da
+
+    e ** 1          : float
+    abs(<float>)    : float
+    log(42, e)      : float
+    int(<float>)    : int
+    <int> * <float> : float
+
+d) res hat den Typ float, da
+
+    0x1b            : int
+    0b1110          : int
+    <int> ^ <int>   : int
+    int(3.1415)     : int
+    <int> // <int>  : int
+    <int> + 2.0     : float

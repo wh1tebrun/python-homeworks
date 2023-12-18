@@ -1,9 +1,5 @@
-breite = (input("Breite: "))
-höhe = (input("Höhe: "))
-zeichen = (input("Zeichen: "))
-
-print((zeichen * int(höhe) + "\n") * int(breite))
-
-
-breiteMalHöhe = int(breite) * int(höhe)
-print("Anzahl : ", (breiteMalHöhe))
+width = int(input("Breite: "))
+height = int(input("Höhe: "))
+symbol = input("Symbol: ")
+print(height * (width * symbol + "\n"))
+print("Anzahl:", width * height)
