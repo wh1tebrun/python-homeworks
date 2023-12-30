@@ -1,55 +1,57 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, InitVar
 
 
 @dataclass
 class Time:
-    """
-    Datenklasse für Zeitangaben im 24-Stunden-Format
+    _hours: InitVar[int]
+    _minutes: InitVar[int]
 
-    Attributes:
-        hours: Stunden (0 bis 23)
-        minutes: Minuten (0 bis 59)
-    """
-
-    hours: int = 0
-    minutes: int = 0
-
-    def __init__(self, hours: int, minutes: int):
-        self.hours = hours % 24
-        self.minutes = minutes % 60
+    def __post_init__(self, _hours: int, _minutes: int):
+        self.__time = _hours * 60 + _minutes
 
     @property
-    def __time(self) -> int:
-        return self.hours * 60 + self.minutes
+    def hours(self) -> int:
+        return (self.__time // 60) % 24
 
-    @__time.setter
-    def __time(self, value: int):
-        self.hours = value // 60
-        self.minutes = value % 60
+    @hours.setter
+    def hours(self, hours: int):
+        self.__post_init__(hours, self.minutes)
 
-    # Comparison operators
-    def __eq__(self, other: "Time") -> bool:
-        return self.__time == other.__time
+    @property
+    def minutes(self) -> int:
+        return self.__time % 60
 
-    def __gt__(self, other: "Time") -> bool:
-        return self.__time > other.__time
+    @minutes.setter
+    def minutes(self, minutes: int):
+        self.__post_init__(self.hours, minutes)
 
-    def __lt__(self, other: "Time") -> bool:
-        return self.__time < other.__time
-
-    def __ge__(self, other: "Time") -> bool:
-        return self.__time >= other.__time
-
-    def __le__(self, other: "Time") -> bool:
-        return self.__time <= other.__time
-
-    # Arithmethic operators
-    def __add__(self, other: "Time") -> "Time":
-        return Time(self.__time + other.__time // 60, self.__time % 60 + other.__time % 60)
-
-    def __sub__(self, other: "Time") -> "Time":
-        return Time(self.__time - other.__time // 60, self.__time % 60 - other.__time % 60)
-
-    # String representation
     def __str__(self) -> str:
-        return f"{self.hours:02d}:{self.minutes:02d}"
+        # with f-Strings
+        return f'{self.hours:02d}:{self.minutes:02d}'
+        # without f-Strings
+        h_str = str(self.hours)
+        if len(h_str) == 1:
+            h_str = "0" + h_str
+        h_min = str(self.minutes)
+        if len(h_min) == 1:
+            h_min = "0" + h_min
+        return h_str + ":" + h_min
+
+    def __eq__(self, other: 'Time') -> bool:
+        return self.minutes == other.minutes and self.hours == other.hours
+
+    def __lt__(self, other: 'Time') -> bool:
+        if self.hours == other.hours:
+            return self.minutes < other.minutes
+        return self.hours < other.hours
+
+    def __le__(self, other: 'Time') -> bool:
+        if self.hours == other.hours:
+            return self.minutes <= other.minutes
+        return self.hours <= other.hours
+
+    def __add__(self, other: 'Time') -> 'Time':
+        return Time(self.hours + other.hours, self.minutes + other.minutes)
+
+    def __sub__(self, other: 'Time') -> 'Time':
+        return Time(self.hours - other.hours, self.minutes - other.minutes)

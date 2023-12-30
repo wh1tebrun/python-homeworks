@@ -40,5 +40,22 @@ def test_user():
     assert not User("Tim", 24, "Passwort123") == User("Tina", 24, "Passwort123")
 
 
+def test_network():
+    network = Network()
+    assert network.add_user(User("Marco", 26, "Passwort123"))
+    assert network.add_user(User("Alex", 32, "83Tha3cOSQXk"))
+    assert network.add_user(User("Lucy", 22, "PP1uS48hL44F"))
+    assert not network.add_user(User("Alex", 15, "kR57b80j4Ug0"))
+
+    updated = User("Marco", 27, "Passwort1234")
+    assert network.update_user("Marco", "Passwort123", updated)
+    assert not network.update_user("Marco", "Passwort123", updated)
+    updated2 = User("Marco", 27, "PASSWORT1234")
+    assert network.update_user("Marco", "Passwort1234", updated2)
+    updated2 = User("Macro", 27, "PASSWORT12345")
+    assert not network.update_user("Marco", "PASSWORT1234", updated2)
+
+
 if __name__ == '__main__':
     test_user()
+    test_network()
