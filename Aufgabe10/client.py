@@ -21,7 +21,7 @@ def main():
         def timestamp_to_string(self) -> str:
             date_time = datetime.fromtimestamp(self.date, UTC)
 
-            return date_time.strftime("%d.%m.%Y %H:%M:%S")
+            return date_time.strftime("%d.%m.%Y")
 
     def yeet_from_dict(yeet_as_dict: dict[str, float | str | int]) -> Yeet:
 
@@ -52,7 +52,7 @@ def main():
     match argv[1]:
 
         case "yeet":
-            content = str(input("Your message: "))
+            content = input("Your message: ")
             session.post("/yee/yeets/add", {"content": content})
 
         case "like":
@@ -82,10 +82,17 @@ def main():
             print(session.get(f'/yee/yeets/all/{amount}'))
 
         case "profile":
-            user: str = str(argv[2])
-            print(session.get(f'/yee/users/{user}/yeets'))
-            print(session.get(f'/yee/users/{user}/followers'))
-            print(session.get(f'/yee/users/{user}/following'))
+            try:
+                user: str = str(argv[2])
+                print(session.get(f'/yee/users/{user}/yeets'))
+                print(session.get(f'/yee/users/{user}/followers'))
+                print(session.get(f'/yee/users/{user}/following'))
+
+            except:
+                user: str = "et130"
+                print(session.get(f'/yee/users/{user}/yeets'))
+                print(session.get(f'/yee/users/{user}/followers'))
+                print(session.get(f'/yee/users/{user}/following'))
 
         case "feed":
             dictofMine = (session.get('/yee/users/et130/following'))
@@ -97,6 +104,21 @@ def main():
                     likeNumberDict = session.get(f'/yee/yeets/{i["yeet_id"]}/likes')
                     likeNumber = likeNumberDict["response"]
                     print(f'This yeet has {len(likeNumber)} likes')
+
+        case "search":
+            try:
+                user: str = argv[2]
+                print(session.get(f'/yee/users/{user}/yeets'))
+
+            except:
+                content = input("Your content: ")
+                allYeets = (session.get(f'/yee/yeets/all/{100000}'))
+                allYeets["response"]
+
+                for i in allYeets["response"]:
+
+                    if content.lower() in i["content"].lower():
+                        print(i)
 
 
 if __name__ == "__main__":
