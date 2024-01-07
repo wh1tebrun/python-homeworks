@@ -27,9 +27,9 @@ def main():
 
         match yeet_as_dict:
 
-            case {"date": float(), "content": str(), "author": str(), "id": int()}:
+            case {"date": float(), "content": str(), "author": str(), "yeet_id": int()}:
                 yeet = Yeet(yeet_as_dict["date"], yeet_as_dict["content"],  # type: ignore
-                            yeet_as_dict["author"], yeet_as_dict["id"])  # type: ignore
+                            yeet_as_dict["author"], yeet_as_dict["yeet_id"])  # type: ignore
 
                 return yeet
 
@@ -88,7 +88,7 @@ def main():
                 print(session.get(f'/yee/users/{user}/followers'))
                 print(session.get(f'/yee/users/{user}/following'))
 
-            except:
+            except Exception:
                 user: str = "et130"
                 print(session.get(f'/yee/users/{user}/yeets'))
                 print(session.get(f'/yee/users/{user}/followers'))
@@ -110,7 +110,7 @@ def main():
                 user: str = argv[2]
                 print(session.get(f'/yee/users/{user}/yeets'))
 
-            except:
+            except Exception:
                 content = input("Your content: ")
                 allYeets = (session.get(f'/yee/yeets/all/{100000}'))
                 allYeets["response"]
@@ -119,6 +119,16 @@ def main():
 
                     if content.lower() in i["content"].lower():
                         print(i)
+
+        case "date":
+            allYeets = (session.get(f'/yee/yeets/all/{100000}'))
+
+            for yeet in allYeets["response"]:
+                _yeet = yeet_from_dict(yeet)
+                _yeet_date = _yeet.timestamp_to_string()
+
+                if argv[2] == _yeet_date:
+                    print(yeet)
 
 
 if __name__ == "__main__":
